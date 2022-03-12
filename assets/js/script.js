@@ -5,9 +5,9 @@ var specialCharacters = ['`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', 
 var uppercase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 var lowercase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-// Write password to the #password textarea
 
-// 1. use prompts for user to select the password they want
+
+// use prompts for user to select the password they want
   function questions() {
     var isValid = false;
     do {
@@ -29,6 +29,7 @@ var lowercase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
       else if((!askNumbers)&&(!askLowercase)&&(!askUppercase)&&(!askSpecialCharacters))
       alert("Must choose at least one!");
       else
+    // validate the input
     // if the ok button is clicked, result will be true (boolean) ok (yes) cancel (no)
 
       isValid = true;
@@ -37,9 +38,7 @@ var lowercase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
     return response;
   }
 
-  // 2. validate the input
-
-  // 3. password is generated to match criteria
+  // password is generated to match criteria
   function generatePassword() {
     var passwordOptions = questions();
     var possibleCombo = [];
@@ -49,12 +48,37 @@ var lowercase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'
       for(var i of numbers)
       possibleCombo.push(i);
     }
-    if(passwordOptions.askLowercase) {
-      
+    if(passwordOptions.askSpecialCharacters) {
+      for(var i of specialCharacters)
+      possibleCombo.push(i);
     }
+    if(passwordOptions.askLowercase) {
+      for(var i of lowercase)
+      possibleCombo.push(i);
+    }
+    if(passwordOptions.askUppercase) {
+      for(var i of uppercase)
+      possibleCombo.push(i);
+    }
+    console.log(possibleCombo);
+
+    for (var i = 0; i < passwordOptions.length; i++) {
+      finalPassword += possibleCombo[Math.floor(Math.random() * possibleCombo.length)];
+
+    }
+      
+  // display password to page or alert
+    console.log(finalPassword);
+    return finalPassword;
   }
-  
-  // 4. display password to page or alert
+
+// Write password to the #password textarea
+  function writePassword() {
+    var password = generatePassword();
+    var passwordText = document.querySelector('#password');
+
+    passwordText.vale = password;
+  }
 
 
 // Add event listener to generate button
